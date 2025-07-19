@@ -41,6 +41,14 @@ The template is pre-configured and ready to use - simply install and go!
 #### Plex
 For Plex, you need to extract the token from your server's configuration:
 
+**Automated Token Extraction (Unraid):**
+For Unraid users, you can use my automated Plex Token Extractor script:
+[**Get Plex Token for Unraid**](https://github.com/SpaceinvaderOne/Get-Plex-Token-Unraid)
+
+This script automatically detects your Plex container and extracts the token - no manual file searching required!
+
+**Manual Extraction:**
+
 **On Unraid:**
 1. Navigate to your **appdata share**: `/mnt/user/appdata/plex/Library/Application Support/Plex Media Server/`
 2. Open the **`Preferences.xml`** file
