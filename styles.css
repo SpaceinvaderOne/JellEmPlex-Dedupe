@@ -1,0 +1,510 @@
+:root {
+    /* Default theme colors */
+    --primary-color: #4fc3f7;
+    --primary-hover: #3db8eb;
+    --accent-color: #4fc3f7;
+    --background-dark: #0f1219;
+    --background-medium: #1e2738;
+    --background-light: #2e445e;
+}
+
+/* Emby theme colors */
+body.theme-emby {
+    --primary-color: #52c234;
+    --primary-hover: #459928;
+    --accent-color: #52c234;
+}
+
+/* Jellyfin theme colors */
+body.theme-jellyfin {
+    --primary-color: #00a4dc;
+    --primary-hover: #0086b3;
+    --accent-color: #00a4dc;
+}
+
+/* Plex theme colors */
+body.theme-plex {
+    --primary-color: #e5a00d;
+    --primary-hover: #cc8f0b;
+    --accent-color: #e5a00d;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-dark);
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 113px;
+    height: 106px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 2.5em;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.description {
+    margin: 5px 0 20px 0;
+    font-size: 1.1em;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.5px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+input, button, select {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Make the dropdown larger */
+select {
+    padding: 30px 15px;
+    font-size: 20px;
+    background-color: var(--background-medium);
+    color: #ffffff;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23ffffff" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+input {
+    background-color: var(--background-medium);
+    color: #ffffff;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px rgba(79,195,247,0.1);
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(79,195,247,0.2);
+}
+
+#results {
+    display: grid;
+    gap: 20px;
+}
+
+.library-box {
+    background-color: var(--background-medium);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.library-box h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.library-box p {
+    margin-bottom: 15px;
+}
+
+.library-box button {
+    background-color: var(--background-light);
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
+.library-box button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+}
+
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 18, 25, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+#loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--primary-color);
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transition: border-color 0.3s ease;
+}
+
+#loading-overlay p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Config management controls */
+.config-controls {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.config-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.config-row select {
+    flex: 1;
+    max-width: 300px;
+}
+
+.config-row button {
+    padding: 10px 15px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.save-config-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.save-config-label input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.save-config-label span {
+    user-select: none;
+}
+
+/* Config controls fade-in animation */
+.config-controls.show {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dark mode styles for results tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--background-medium);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+table th {
+    background-color: var(--primary-color) !important;
+    color: var(--background-dark) !important;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--background-dark);
+}
+
+table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--background-light);
+    color: #ffffff !important;
+    background-color: var(--background-medium) !important;
+}
+
+/* Force dark backgrounds with stronger selectors */
+body:not(.light-mode) table td,
+body:not(.light-mode) table td[style],
+body:not(.light-mode) tr td {
+    background-color: var(--background-medium) !important;
+    color: #ffffff !important;
+}
+
+body:not(.light-mode) table tr:hover td,
+body:not(.light-mode) table tr:hover td[style] {
+    background-color: var(--background-light) !important;
+}
+
+body:not(.light-mode) table tr:nth-child(even) td,
+body:not(.light-mode) table tr:nth-child(even) td[style] {
+    background-color: var(--background-light) !important;
+}
+
+/* Override any inline background styles */
+body:not(.light-mode) table tr[style] td {
+    background-color: var(--background-medium) !important;
+}
+
+body:not(.light-mode) table tr[style]:nth-child(even) td {
+    background-color: var(--background-light) !important;
+}
+
+/* Dark mode text styling */
+body:not(.light-mode) {
+    color: #ffffff;
+}
+
+body:not(.light-mode) h2,
+body:not(.light-mode) h3,
+body:not(.light-mode) p {
+    color: #ffffff !important;
+}
+
+/* Duplicate sets container styling */
+body:not(.light-mode) .library-box {
+    background-color: var(--background-medium) !important;
+    color: #ffffff !important;
+}
+
+/* Top right controls container */
+.top-right-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #495057;
+    color: #ffffff;
+    border: 1px solid #6c757d;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    line-height: 1;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    background-color: #6c757d;
+}
+
+/* Light mode overrides - only change backgrounds, keep themed colors */
+body.light-mode {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+body.light-mode .container {
+    background-color: #ffffff;
+}
+
+body.light-mode input, 
+body.light-mode select {
+    background-color: #f8f9fa;
+    color: #333333;
+    border: 1px solid #dee2e6;
+}
+
+body.light-mode .library-box {
+    background-color: #f8f9fa;
+    color: #333333;
+}
+
+body.light-mode table {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+body.light-mode table th {
+    background-color: #f8f9fa;
+    /* Keep the themed color: color: var(--primary-color); */
+}
+
+body.light-mode table td {
+    color: #333333;
+    border-bottom: 1px solid #dee2e6;
+}
+
+body.light-mode table tr:hover {
+    background-color: #f8f9fa;
+}
+
+body.light-mode table tr:nth-child(even) {
+    background-color: #f1f3f4;
+}
+
+body.light-mode .theme-toggle {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+body.light-mode .description {
+    color: #333333 !important;
+}
+
+/* Donate button styling */
+.donate-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6c757d;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid #868e96;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.donate-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    background-color: #868e96;
+    text-decoration: none;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    input, button {
+        padding: 12px;
+    }
+    
+    .config-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .config-row select {
+        max-width: none;
+    }
+    
+    .top-right-controls {
+        top: 10px;
+        right: 10px;
+        gap: 8px;
+    }
+    
+    .theme-toggle,
+    .donate-button {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  jellemplex-dedupe:
+    image: spaceinvaderone/jellemplex-dedupe:latest
+    container_name: jellemplex-dedupe
+    ports:
+      - "3369:80"
+    restart: unless-stopped

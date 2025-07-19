@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JELL-EM-PLEX DEDUPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="top-right-controls">
+        <a href="https://www.paypal.com/donate/?hosted_button_id=MQAYQ77SSJCES" target="_blank" class="donate-button" title="Buy me a coffee">
+            ☕
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">🌓</button>
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="sio.png" alt="SIO Logo" class="logo">
+            <h1>JELL-EM-PLEX DEDUPE</h1>
+            <p class="description">A dedupe tool for Jellyfin, Emby and Plex</p>
+        </div>
+        <div class="input-group">
+            <select id="serverType">
+                <option value="emby">Emby</option>
+                <option value="jellyfin">Jellyfin</option>
+                <option value="plex">Plex</option>
+            </select>
+            <input type="text" id="serverUrl" placeholder="Server URL www.domain.com || IP:8096 || localhost:8096">
+            <input type="text" id="apiKey" placeholder="API Key / Token">
+            
+            <!-- Config management controls -->
+            <div class="config-controls">
+                <div class="config-row">
+                    <select id="configSelect" style="display: none;">
+                        <option value="">Select saved config...</option>
+                    </select>
+                    <button id="loadConfigBtn" onclick="loadSelectedConfig()" style="display: none;">Load Config</button>
+                    <button id="deleteConfigBtn" onclick="deleteSelectedConfig()" style="display: none;">Delete Config</button>
+                </div>
+                <div class="config-row">
+                    <label class="save-config-label">
+                        <input type="checkbox" id="saveConfig">
+                        <span>Save this configuration</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button onclick="findDuplicates()">Find Duplicate Movies</button>
+        </div>
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+    <div id="loading-overlay" class="hidden">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+</body>
+</html>
