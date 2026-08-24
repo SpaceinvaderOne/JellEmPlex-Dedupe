@@ -55,7 +55,11 @@ async function fetchLibraries(serverUrl, apiKey, serverType) {
     }
     
     const endpoint = serverType === 'jellyfin' ? '/Library/VirtualFolders' : '/emby/Library/VirtualFolders';
-    const response = await fetch(`${serverUrl}${endpoint}?api_key=${apiKey}`);
+//    const response = await fetch(`${serverUrl}${endpoint}?api_key=${apiKey}`);
+//  new versions of Jellyfin don't allow Legacy Authentication, Gemini found this solution    
+    const response = await fetch(serverUrl + endpoint, {
+        headers: { 'Authorization': 'MediaBrowser Token="' + apiKey + '"' }
+    });
     if (!response.ok) throw new Error('Failed to fetch libraries');
     return await response.json();
 }
@@ -66,7 +70,11 @@ async function fetchMoviesFromLibrary(serverUrl, apiKey, libraryId, serverType) 
     }
     
     const endpoint = serverType === 'jellyfin' ? '/Items' : '/emby/Items';
-    const response = await fetch(`${serverUrl}${endpoint}?Recursive=true&ParentId=${libraryId}&IncludeItemTypes=Movie&Fields=Path,ProductionYear,RunTimeTicks,MediaSources,MediaStreams&api_key=${apiKey}`);
+//    const response = await fetch(`${serverUrl}${endpoint}?Recursive=true&ParentId=${libraryId}&IncludeItemTypes=Movie&Fields=Path,ProductionYear,RunTimeTicks,MediaSources,MediaStreams&api_key=${apiKey}`);
+//    new versions of Jellyfin don't allow Legacy Authentication, Gemini found this solution
+    const response = await fetch(serverUrl + endpoint + '?Recursive=true&ParentId=' + libraryId + '&IncludeItemTypes=Movie&Fields=Path,ProductionYear,RunTimeTicks,MediaSources,MediaStreams', {
+        headers: { 'Authorization': 'MediaBrowser Token="' + apiKey + '"' }
+    );
     if (!response.ok) throw new Error(`Failed to fetch movies from library ${libraryId}`);
     const data = await response.json();
     return data.Items || [];
@@ -1506,10 +1514,14 @@ async function deleteMovieFromServer(itemId, movieTitle, rowElement) {
         } else {
             // Emby/Jellyfin
             const endpoint = serverType === 'jellyfin' ? '/Items' : '/emby/Items';
-            response = await fetch(`${fullServerUrl}${endpoint}/${itemId}?api_key=${apiKey}`, {
+//            response = await fetch(`${fullServerUrl}${endpoint}/${itemId}?api_key=${apiKey}`, {
+//    new versions of Jellyfin don't allow Legacy Authentication, Gemini found this solution            
+            response = await fetch(`${fullServerUrl}${endpoint}/${itemId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'    
+                    'Authorization': 'MediaBrowser Token="' + apiKey + '"' 
+     // added 'Authorization' here together with other already defined parameters 
                 }
             });
         }
